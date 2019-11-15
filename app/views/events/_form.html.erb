@@ -1,0 +1,61 @@
+<%= form_for @event,url: (@event.new_record? ? events_path : event_path(@event)), as: :event, :html => { :class => "form-horizontal event" } do |f| %>
+
+  <% if @event.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@event.errors.count, "error") %> prohibited this event from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @event.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :name, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+    <%=f.error_span(:name) %>
+  </div>
+
+  <% unless @event.new_record? %>
+    <div class="form-group">
+      <%= f.label :type, :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= f.select :type, options_for_select([['Clock In', 'ClockIn'], ['Clock Out', 'ClockOut']]), :class => 'form-control' %>
+      </div>
+      <%=f.error_span(:type) %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :time, :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10 input-group date" style="padding: 0 14px;">
+        <%= f.text_field :time, :class => 'form-control datetimepicker' , data: {format: "dd/MM/yyyy hh:mm:ss"} %>
+        <span class="input-group-addon">
+          <span class="glyphicon glyphicon-calendar"></span>
+        </span>
+      </div>
+      <%=f.error_span(:time) %>
+    </div>
+  <% else %>
+    <%= f.hidden_field :type %>
+  <% end %>
+  <%= f.hidden_field :user_id, value: current_user.id %>
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                events_path, :class => 'btn btn-default' %>
+    </div>
+  </div>
+<% end %>
+<script type="text/javascript">
+        $('.datetimepicker').datetimepicker({
+            format: 'DD/MM/YYYY HH:mm:ss'
+        });
+</script>

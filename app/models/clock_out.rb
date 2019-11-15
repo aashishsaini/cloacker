@@ -1,0 +1,3 @@
+class ClockOut < Event
+
+end

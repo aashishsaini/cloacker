@@ -1,0 +1,6 @@
+<div class="col-xs-offset-5 col-sm-offset-5"><%= render 'clock' %></div>
+<%- model_class = Event -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize %></h1>
+</div>
+<%= render :partial => 'form' %>

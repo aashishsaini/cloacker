@@ -1,0 +1,45 @@
+<div class="col-xs-offset-5 col-sm-offset-5"><%= render 'clock' %></div>
+<%- model_class = Event -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:type) %></th>
+      <th><%= model_class.human_attribute_name(:time) %></th>
+      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @events.each do |event| %>
+      <tr>
+        <td><%= event.name %></td>
+        <td><%= event.type %></td>
+        <td><%= event.time %></td>
+        <td>
+          <%#= link_to t('.show', :default => t("helpers.links.show")),
+                      event_path(event), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                      edit_event_path(event), :class => 'btn btn-default btn-xs' %>
+          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                      event_path(event),
+                      :method => :delete,
+                      :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+                      :class => 'btn btn-xs btn-danger' %>
+        </td>
+      </tr>
+    <% end unless @events.blank?%>
+    <% if @events.blank? %>
+      <tr>
+        <td colspan="4" class="text-center">
+          No records found
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<%= link_to t('.new_event', :default => t("helpers.links.new_event")),
+            new_event_path,
+            :class => 'btn btn-primary pull-right', style: 'color: #ffffff' %>

@@ -1,0 +1,3 @@
+class ClockIn < Event
+
+end
